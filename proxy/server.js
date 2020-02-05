@@ -29,8 +29,18 @@ app.get('/bank', (req, res) => {
     }))
 })
 
+// Image Carousel Module GET for images by ID
 
-
+app.get('/image', (req, res) => {
+  console.log("id", req.url);
+  axios.get(`http://localhost:3002${req.url}`)
+    .then((response) => {
+      res.send(response.data)
+    })
+    .catch((error => {
+      console.log(error);
+    }))
+})
 
 app.listen(port, () => {
   console.log(`Ay, Proxy Server Running at: http://localhost:${port}`)
