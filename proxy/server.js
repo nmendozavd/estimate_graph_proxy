@@ -52,6 +52,17 @@ app.get('/home', (req, res) => {
     }));
 });
 
+// Map Carousel Module GET for images 
+app.get('/images', (req, res) => {
+  axios.get('http://localhost:3004/images')
+    .then((response) => {
+      res.send(response.data)
+    })
+    .catch((error => {
+      console.log(error)
+    }))
+})
+
 app.listen(port, () => {
   console.log(`Proxy Server Running On Port: ${port}`)
 })
