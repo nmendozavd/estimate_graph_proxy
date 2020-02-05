@@ -1,0 +1,37 @@
+const express = require('express')
+const morgan = require('morgan')
+const path = require('path')
+const axios = require('axios')
+const app = express()
+const port = process.env.PORT || 3000
+
+app.use(morgan('dev'))
+app.use(express.static(path.join(__dirname, '/public/lib/')))
+
+// Caculator Module GET for data
+app.get('/homes', (req, res) => {
+  axios.get('http://localhost:3001/homes')
+    .then((response) => {
+      res.send(response.data)
+    })
+    .catch((error => {
+      console.log(error)
+    }))
+})
+
+app.get('/bank', (req, res) => {
+  axios.get('http://localhost:3001/bank')
+    .then((response) => {
+      res.send(response.data)
+    })
+    .catch((error => {
+      console.log(error)
+    }))
+})
+
+
+
+
+app.listen(port, () => {
+  console.log(`Ay, Proxy Server Running at: http://localhost:${port}`)
+})
