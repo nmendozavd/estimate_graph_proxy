@@ -1,15 +1,32 @@
-/* #imageCarousel {
+img.calender {
+  padding-left: 54em;
+}
 
-} */
+body {
+  font-family: Libre Franklin;
+}
+
+#imageCarousel {
+  padding-top: .1em;
+  padding-left: 8em;
+}
 
 #calculator {
-  padding-top: 37em;
+  padding-top: 1em;
+  padding-left: 8em;
 }
 
 #estimateGraph {
   padding-top: 1em;
+  padding-left: 8em;
 }
 
 #mapCarousel {
   padding-top: 15em;
+  /* padding-left: 4em; */
 }
+
+/* hr.new1 {
+  padding-top: 30em;
+
+} */
