@@ -120,7 +120,7 @@ class Headers extends React.Component {
   render() {
     return (
       <Wrapper>
-        <h2>Redfin Estimate for 131 FREMONT Ave</h2>
+        <h2>MyPad Estimate for 131 FREMONT Ave</h2>
         <LinkHomeFacts>
           <span>Edit Home Facts </span>to improve accuracy.
         </LinkHomeFacts>
