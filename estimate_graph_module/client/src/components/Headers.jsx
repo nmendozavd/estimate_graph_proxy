@@ -134,7 +134,6 @@ class Headers extends React.Component {
         <Heading>
           <span>$1.1M </span>since sold in 2012
         </Heading>
-        
       </Wrapper>
     )
   }

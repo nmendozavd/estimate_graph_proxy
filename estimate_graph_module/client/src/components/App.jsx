@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import LineChart from './LineChart.jsx';
+import LineChart1Year from './LineChartOneYear.jsx';
+import LineChart5Year from './LineChartFiveYear.jsx';
 import Headers from './Headers.jsx';
 import Buttons from './Buttons.jsx';
 
@@ -9,41 +10,55 @@ const Wrapper = styled.div`
   font-family: Libre Franklin;
   width: 670px;
   height: 264px;
+`
 
-  svg {
-    background: white;
-    width: 670px;
-    height: 264px;
+const Span1 = styled.span`
+  float: right;
+  font-size: 100%;
+  text-align: left;
+  vertical-align: bottom;
+  color: #999;
+  padding: .5rem 0;
+  border-bottom: .125rem solid transparent;
+  transition: all .2s ease-out 0s;
+  cursor: pointer;    
+`
+
+const Span2 = styled.span`
+  position: relative;
+  float: right;
+  font-size: 100%;
+  text-align: right;
+  font: inherit;
+  vertical-align: baseline;
+  margin-left: 1rem;
+  color: #333;
+  border-color: currentColor;
+  padding: .5rem 0;
+  border-bottom: .125rem solid transparent;
+  transition: all .2s ease-out 0s;
+
+  button {
+    border-radius: 2px 2px 2px 2px;
+    display: inline-block;
+    height: 40px;
+    padding: 12px 1.5rem;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    text-align: center;
+    vertical-align: middle;
+    /* white-space: nowrap; */
+    letter-spacing: -.1px;
+    line-height: 1;
+    box-shadow: none;
+    cursor: pointer;
+    text-decoration: none;
+    
+  }
   
-    polyline {
-      fill: transparent;
-      stroke: rgb(51, 51, 51);
-      stroke-width: 2;
-      opacity: 1;
-    } 
-
-    g {
-      
-      line {
-        color: #999;
-        stroke: rgb(226, 226, 226);
-        fill: transparent;
-        stroke-width: 1;
-        stroke-linejoin: round;
-
-        text {
-          text-anchor: "middle";
-          font-size: 14px;
-          /* fill: rgb(153, 153, 153); */
-          font-family: Libre Franklin;
-          stroke: transparent;
-          letter-spacing: normal;
-          padding: 8px;
-          stroke-width: 0;
-        }
-      }
-    } 
- }
 `
 
 // const getData = `
@@ -58,19 +73,22 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      view: true,
       fiveYearData: [],
-      oneYearData: []
+      oneYearData: [],
+      
     }
+    this.changeView = this.changeView.bind(this);
   }
   
   componentDidMount() {
-    this.getEstimate();
+    this.getEstimate()
   }
 
   getEstimate () {
-    axios.get('/home')
+    axios.get('/homes')
       .then((response) => {
-        console.log('Data:', response.data)
+        // console.log('Data:', response.data)
         var fiveYearData = response.data[0].fiveYearPrice;
         var oneYearData = response.data[1].oneYearPrice;
         this.setState({ fiveYearData: fiveYearData });
@@ -81,62 +99,33 @@ class App extends React.Component {
       });
   }
 
+  changeView () {
+    this.setState({
+      view: !this.state.view
+    });
+  }
+
   
 
   render() {
-
-  
     return (
       <Wrapper>
         <Headers></Headers>
-        <Buttons></Buttons>
-        <svg viewBox="0 0 670 264">
-          <g>
-            {/* parallel lines in graph*/}
-            <line x1="15" x2="610" y1="214" y2="214"></line>
-            <line x1="610" x2="15" y1="178" y2="178"></line>
-            <line x1="610" x2="15" y1="133" y2="133"></line>
-            <line x1="610" x2="15" y1="88" y2="88"></line>
-            <line x1="610" x2="15" y1="43" y2="43"></line>
-
-            {/* labels on x-axis */}
-            <text dx="0" dy="11.9" x="16" y="226">Jan</text>
-            <text dx="0" dy="11.9" x="112" y="226">Mar</text>
-            <text dx="0" dy="11.9" x="210" y="226">May</text>
-            <text dx="0" dy="11.9" x="309" y="226">Jul</text>
-            <text dx="0" dy="11.9" x="409" y="226">Sept</text>
-            <text dx="0" dy="11.9" x="508" y="226">Nov</text>
-            <text dx="0" dy="11.9" x="606" y="226">Jan</text>
-
-            {/* labels on y-axis */}
-            <text dx="0" dy="4.97" x="622" y="43">$3.0M</text>
-            <text dx="0" dy="4.97" x="622" y="88">$2.5M</text>
-            <text dx="0" dy="4.97" x="622" y="133">$2.0M</text>
-            <text dx="0" dy="4.97" x="622" y="178">$1.5M</text>
-          </g>
-          {/* <path d={data} /> */}
-
-          <polyline points="
-            20,90
-            80,100
-            130,120
-            180,130
-            230,140
-            280,150
-            320,140
-            370,145
-            420,160
-            470,155
-            550,165
-            610,150
-          "
-          /> 
-        </svg>
+        <Span2>
+          <span onClick={this.changeView}> <button>Years</button>
+            { this.state.view 
+              ? <LineChart1Year></LineChart1Year> 
+              : <LineChart5Year></LineChart5Year> 
+            } 
+          </span>
+        </Span2>
+        {/* <Span1>
+          <span onClick={this.changeView}>1 year</span>
+        </Span1>  */}
       </Wrapper>
     )
   }
 }
-// x axis  make 600 > each month is at 50px increments 
-// y axis make 1 px = $11,111 base is at 1 million (so add 214px, subtract 1 million from dollar sum)
+
 
 export default App;

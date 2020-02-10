@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
 const Wrapper = styled.div`
 
 `
@@ -37,15 +36,29 @@ class Buttons extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      
     }
+
+    this.toggleYears = this.toggleYears.bind(this);
   }
 
   
+  toggleYears() {
+    console.log('click')
+    this.setState({
+      is5yearData: !this.state.is5yearData
+    });
+  }
+
   render() {
     return (
       <Wrapper>
-        <Span2>5 years</Span2>
-        <Span1>1 year</Span1>
+        <Span2>
+          <span onClick= { this.toggleYears }> 5 years { this.state.is5yearData } </span>
+        </Span2>
+        <Span1>
+          <span>1 year</span>
+        </Span1>
       </Wrapper>
     )
   }
